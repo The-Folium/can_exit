@@ -363,11 +363,8 @@ def can_exit_no_visual(labyrinth: list) -> bool:
             self.current_mark = 2
             self.way_found = False
             self.move_has_been_done = False
-            self.mode = "regular"
             labyrinth[start_position[1]][start_position[0]] = {"wave_id": id,
-                                                                 "phase": 1,
-                                                                 "mode": self.mode,
-                                                                 "stage": 0}
+                                                                 "phase": 1}
 
         def go(self) -> None:
             """
@@ -383,9 +380,7 @@ def can_exit_no_visual(labyrinth: list) -> bool:
 
                         if labyrinth[new_y][new_x] == 0:
                             labyrinth[new_y][new_x] = {"wave_id": self.id,
-                                                         "phase": self.current_mark,
-                                                         "mode": "regular",
-                                                         "stage": 0}
+                                                         "phase": self.current_mark}
 
                             self.move_has_been_done = True
                             new_frontier.append((new_x, new_y))
