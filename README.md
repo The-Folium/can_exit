@@ -3,6 +3,7 @@ Python competition - problem 10 "can_exit"
 You need pygame installed to run this script
 
 run "demo.py" to watch demonstration
+
 run "tests.py" to run unittests
 
 Controls in visual mode:
