@@ -176,7 +176,4 @@ class can_exit_testCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    try:
-        unittest.main()
-    except:
-        pass
+    unittest.main()
