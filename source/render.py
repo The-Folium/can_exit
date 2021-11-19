@@ -6,7 +6,7 @@ class Block(pygame.sprite.Sprite):
     """
     Класс представляет изометрический блок. Конструктор загружает, конвертирует, масштабирует коллекцию спрайтов.
     """
-    def __init__(self, block_size):
+    def __init__(self, block_size: int):
         super().__init__()
         self.terrain_surf = pygame.transform.smoothscale(pygame.image.load("../sprites/grass.png").convert_alpha(), (block_size, block_size))
         self.water_surf_list = []
@@ -36,7 +36,7 @@ class Renderer:
     render_status() - отрисовывает весь пояснительный текст
     """
 
-    def __init__(self, screen, block_size):
+    def __init__(self, screen, block_size: int):
         self.screen = screen
         self.block_size = block_size
         self.block = Block(block_size)
@@ -45,19 +45,18 @@ class Renderer:
         self.jump_speed = 0.2
         self.blink_counter = 0
 
-
-    def render(self, labyrinth, status):
+    def render(self, labyrinth: list, status: str) -> None:
         self.screen.fill("Black")
         height = len(labyrinth)
         width = len(labyrinth[0])
 
-        def draw_start_marker():
+        def draw_start_marker() -> None:
             x, y = (screen_width - (height + width + 1) * self.block_size // 2) // 2, screen_height // 2 - self.block_size // 2 * (1 - 0.5 * sin(self.jump))
             self.block.image = self.block.s_surf
             self.block.rect.topleft = (x, y)
             self.screen.blit(self.block.image, self.block.rect)
 
-        def draw_finish_marker():
+        def draw_finish_marker() -> None:
             x, y = (screen_width - (height + width + 1) * self.block_size // 2) //2 + (height + width-2) * (self.block_size//2-1), screen_height//2 + (height-width) * (self.block_size//4-1) - self.block_size // 2 * (1 - 0.5 * cos(self.jump)) + 1
             self.block.image = self.block.f_surf
             self.block.rect.topleft = (x, y)
@@ -99,12 +98,12 @@ class Renderer:
                     self.screen.blit(self.block.image, self.block.rect)
 
                 # drawing path
-                def draw_marker():
+                def draw_marker() -> None:
                     self.block.image = self.block.path_surf
                     self.block.rect.topleft = (x, y + 10 - labyrinth[row][col]["stage"])
                     self.screen.blit(self.block.image, self.block.rect)
 
-                def draw_water():
+                def draw_water() -> None:
                     self.block.image = self.block.water_surf_list[10]
                     self.block.rect.topleft = (x, y)
                     self.screen.blit(self.block.image, self.block.rect)
@@ -127,8 +126,7 @@ class Renderer:
                     if self.jump > 2 * pi:
                         self.jump -= 2 * pi
 
-
-    def render_status(self, log, message, animation_speed, status):
+    def render_status(self, log: list, message: list, animation_speed: int, status: str) -> None:
 
         # LEFT-BOTTOM - animation speed
         stat_surf = self.font.render("[UP], [DOWN] - adjust animation speed (2..60)", False, "grey")

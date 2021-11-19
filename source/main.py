@@ -73,7 +73,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
         surrounding = [(-1, 0), (1, 0), (0, 1), (0, -1)]
 
-        def __init__(self, id, start_position):
+        def __init__(self, id: int, start_position: tuple):
             self.id = id
             self.frontier = [start_position]
             self.current_mark = 2
@@ -118,7 +118,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
                 self.frontier = new_frontier
                 self.current_mark += 1
 
-        def is_water_raised(self):
+        def is_water_raised(self) -> bool:
             for line in labyrinth:
                 for item in line:
                     if type(item) == dict and item["wave_id"] == self.id and \
@@ -126,7 +126,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
                         return False
             return True
 
-        def init_turning_to_red(self):
+        def init_turning_to_red(self) -> None:
             nonlocal stuck_counter, log, message
 
             if self.mode != "red":
@@ -136,7 +136,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
                 message = ["There's no path from one corner to another", f"Wave is turning {'red' if self.id == 1 else 'green'}",
                            "That means wave won't spread anymore"]
 
-        def proceed_turning_to_red(self):
+        def proceed_turning_to_red(self) -> None:
             turning_to_red_flag = False
             if not self.mode == "red":
                 return
@@ -164,7 +164,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
             if self.turning_to_red_status == "in progress" and not turning_to_red_flag:
                 self.turning_to_red_status = "done"
 
-    def is_way_found():
+    def is_way_found() -> bool:
         return init and (wave1.way_found or wave2.way_found)
 
     def raise_water_level() -> bool:
@@ -212,7 +212,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
                 trace_flag = True
         return trace_flag
 
-    def animate_trace():
+    def animate_trace() -> None:
         """
         Функция анимирует "всплытие" маркеров на поверхность. Продвигает маркеры на один шаг анимации по всей территории
         :return: None
@@ -357,7 +357,7 @@ def can_exit_no_visual(labyrinth: list) -> bool:
 
         surrounding = [(-1, 0), (1, 0), (0, 1), (0, -1)]
 
-        def __init__(self, id, start_position):
+        def __init__(self, id: int, start_position: tuple):
             self.id = id
             self.frontier = [start_position]
             self.current_mark = 2
@@ -369,7 +369,7 @@ def can_exit_no_visual(labyrinth: list) -> bool:
                                                                  "mode": self.mode,
                                                                  "stage": 0}
 
-        def go(self):
+        def go(self) -> None:
             """
             Метод реализует итерацию распространения волны
             :return: None
@@ -397,7 +397,7 @@ def can_exit_no_visual(labyrinth: list) -> bool:
                 self.frontier = new_frontier
                 self.current_mark += 1
 
-    def is_way_found():
+    def is_way_found() -> bool:
         return wave1.way_found or wave2.way_found
 
     wave1 = Wave(1, (0, 0))
