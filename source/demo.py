@@ -1,4 +1,4 @@
-from main import can_exit_visual, can_exit_no_visual
+from main import *
 
 if __name__ == '__main__':
     # ORIGINAL TASKS
