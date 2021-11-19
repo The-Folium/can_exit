@@ -1,14 +1,33 @@
-# can_exit
-Python competition - problem 10 "can_exit"
-You need pygame installed to run this script
+# Кодинг-марафон. Задача 10. "can_exit"
 
-run "demo.py" to watch demonstration
+Для работы кода необходим установленный pygame:
+```
+pip pygame install
+```
 
-run "tests.py" to run unittests
+## Описание файлов проекта
+```
+sprites/ - папка со спрайтами
+source/main.py - содержит реализацию двух версий алгоритма: can_exit_visual и can_exit_non_visual
+source/render.py - классы Block (спрайты) и Renderer (весь инструментарий отрисовки)
+source/settings.py - настройки разрешения графического окна
+```
 
-Controls in visual mode:
-[SPACE] - start visualization
-[ENTER] - close current visualization
-[UP]/[DOWN] - adjust animation speed
+Запускаемые файлы:
+```
+source/demo.py - запускаемый скрипт, демонстрационный режим, применяет алгоритм к последовательности лабиринтов
+source/tests.py - запускаемый скрипт, запуск юниттестов функции без визуализации
+```
+---
+Управление в графическом режиме:
 
-The result of the pathfinding will appear in the bottom-right corner as soon as it be available.
+```
+[SPACE]     - начать визуализацию
+[ENTER]     - выход, если алгоритм отработал
+[UP]/[DOWN] - настройка скорости анимации
+```
+
+Фрагмент работы деморежима:
+
+https://user-images.githubusercontent.com/63975541/142671895-08f60a04-7852-4aa0-b4d8-0dde1012f946.mp4
+
