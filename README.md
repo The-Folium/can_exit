@@ -2,7 +2,7 @@
 
 Для работы кода необходим установленный pygame:
 ```
-pip pygame install
+pip install pygame
 ```
 
 ## Описание файлов проекта
