@@ -27,6 +27,10 @@ source/tests.py - запускаемый скрипт, запуск юнитте
 [UP]/[DOWN] - настройка скорости анимации
 ```
 
+Интерфейс:
+
+![hints](https://user-images.githubusercontent.com/63975541/142674336-3607b88c-1d29-412e-b5e3-82f8989cf68d.jpg)
+
 Фрагмент работы деморежима:
 
 https://user-images.githubusercontent.com/63975541/142672980-82496901-e118-4048-abc9-3725ccb30374.mp4
