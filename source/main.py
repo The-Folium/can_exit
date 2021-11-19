@@ -1,14 +1,20 @@
 import pygame
 from copy import deepcopy
 
+# разрешение графического окна - в файле settings.py
 from settings import screen_width, screen_height
 from render import Renderer
 
+# реализованы две версии функции: с визуализацией и без нее:
+# can_exit_visual - с визуализацией
+# can_exit_no_visual - без визуализации
 
 
 def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
     """
-    Функция визуализирует работу алгоритм поиска прохода в заданном лабиринте
+    Функция визуализирует работу алгоритма поиска прохода в заданном лабиринте
+    Возвращает True, если лабиринт имеет сквозной проход от левого верхнего до правого нижнего угла, False в противном случае
+
     :param labyrinth: list of lists
     :param animation_speed: int - число шагов в секунду
     :return: bool
@@ -16,15 +22,21 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
     height = len(labyrinth)-1
     width = len(labyrinth[0])-1
+
+    # Данные анимаций
     max_water_level = 11
     max_red_level = 12
     max_trace_level = 10
+
     path_points = []
     stuck_counter = 0
+
     log = []
-    init = True
     status = "waiting for keypress"
     message = ["Press [Space] to start"]
+
+    init = True
+
     # available statuses:
     # ------------------
     # "special" - для проходимого лабиринта 1х1
@@ -34,8 +46,8 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
     # "drawing path" - путь найден, происходит анимация пути
     # "path drawn" - путь нарисован
     # "path was not found" - все волны заполнили доступное простанство и не встретились
-    # "done success" - успешний финал
-    # "done fail" - неуспешний финал
+    # "done success" - успешный финал
+    # "done fail" - неуспешный финал
 
     # inappropriate data
     if height < 0 or width < 0 or labyrinth[0][0] != 0 or labyrinth[height][width] != 0:
@@ -56,7 +68,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
     class Wave:
         """
-        Класс, реализующий волну. Два экземпляра этого класса реализуют алгоритм.
+        Класс, реализующий волну. Два экземпляра этого класса, инициализированные в разных углах лабиринта, реализуют алгоритм.
         """
 
         surrounding = [(-1, 0), (1, 0), (0, 1), (0, -1)]
@@ -176,9 +188,9 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
     def proceed_trace() -> bool:
         """
-        Функция реализует поиск и итерационную активацию одного из кратчайших путей в лабиринте.
-        Каждый вызов генерирует новые два шага пути.
-        Возвращает False, если весь путь найден
+        Функция реализует поиск и итерационную активацию одного из кратчайших путей в лабиринте
+        Каждый вызов генерирует новые два шага пути
+        Возвращает False, если весь путь найден, True, если путь еще в процессе отыскания
         :return: bool
         """
 
@@ -202,7 +214,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
     def animate_trace():
         """
-        Функция анимирует "всплытие" маркеров на поверхность. Продвигает маркеры на один шаг анимации все активированные шаги пути.
+        Функция анимирует "всплытие" маркеров на поверхность. Продвигает маркеры на один шаг анимации по всей территории
         :return: None
         """
         nonlocal animate_trace_status
@@ -222,12 +234,13 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
     # pygame setup
     pygame.init()
     screen = pygame.display.set_mode((screen_width, screen_height))
+    pygame.display.set_caption('Can exit')
     clock = pygame.time.Clock()
 
     block_size = int(min(80, 2*max(screen_height//(height+width+8), screen_width//(height+width+8)))//4)*4
     renderer = Renderer(screen, block_size)
 
-    # system init - мы не создаем волны, если лабиринт не валиден
+    # system init - мы не создаем волны и не запускаем алгоритм, если лабиринт не валиден
     if init:
         wave1 = Wave(1, (0, 0))
         wave2 = Wave(2, (width, height))
@@ -267,7 +280,7 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
                     elif animation_speed > 2:
                         animation_speed -= 2
 
-        # Управление статусами:
+        # Status control:
         if status in ["searching", "wave got stuck", "drawing path", "path drawn", "path was not found"] and init:
             wave1.go()
             wave2.go()
@@ -328,10 +341,13 @@ def can_exit_no_visual(labyrinth: list) -> bool:
 
     height = len(labyrinth) - 1
     width = len(labyrinth[0]) - 1
+
+    # Обработка частных случаев
     if height < 0 or width < 0 or labyrinth[0][0] != 0 or labyrinth[height][width] != 0:
         return False
     if labyrinth == [[0]]:
         return True
+
     labyrinth = deepcopy(labyrinth)
 
     class Wave:
@@ -395,14 +411,3 @@ def can_exit_no_visual(labyrinth: list) -> bool:
             return True
         if not wave1.move_has_been_done or not wave2.move_has_been_done:
             return False
-
-# if __name__ == '__main__':
-#     dim = 40
-#     # print(can_exit([[0]*dim if t % 2 else ([1]*(dim-1) + [0])[::((t+1)%4 - 2)] for t in range(dim)]))
-#
-#     lst = [[]]
-#     while not can_exit_no_visual(lst):
-#         lst = [[choice([1, 1, 1,1,1,1,1,1,1,0,0,0,0,0,0,0, 0, 0, 0, 0]) for __ in range(dim)] for _ in range(dim)]
-#     print(lst)
-#     # lst = [[choice([1, 1, 1,1,1,1,1,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0]) for __ in range(dim)] for _ in range(dim)]
-#     print(can_exit_visual(lst, animation_speed=20))

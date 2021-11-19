@@ -131,7 +131,7 @@ class Renderer:
     def render_status(self, log, message, animation_speed, status):
 
         # LEFT-BOTTOM - animation speed
-        stat_surf = self.font.render("[UP], [DOWN] - adjust animation speed (1..60)", False, "grey")
+        stat_surf = self.font.render("[UP], [DOWN] - adjust animation speed (2..60)", False, "grey")
         stat_rect = stat_surf.get_rect(topleft=(10, screen_height-60))
         self.screen.blit(stat_surf, stat_rect)
 
