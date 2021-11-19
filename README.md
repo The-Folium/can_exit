@@ -29,5 +29,5 @@ source/tests.py - запускаемый скрипт, запуск юнитте
 
 Фрагмент работы деморежима:
 
-https://user-images.githubusercontent.com/63975541/142671895-08f60a04-7852-4aa0-b4d8-0dde1012f946.mp4
+https://user-images.githubusercontent.com/63975541/142672980-82496901-e118-4048-abc9-3725ccb30374.mp4
 
