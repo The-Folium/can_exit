@@ -266,7 +266,10 @@ def can_exit_visual(labyrinth: list, animation_speed=25) -> bool:
 
                 if event.key == pygame.K_RETURN and (status[:4] == "done" or status == "special"):
                     pygame.quit()
-                    return is_way_found()
+                    if status == "special":
+                        return True
+                    else:
+                        return is_way_found()
 
                 if event.key == pygame.K_UP:
                     if animation_speed < 10:
